@@ -1,3 +1,8 @@
+# Short, Justin
+# CECS 327
+# Due 10/20/24
+# Assignment 5 - Socket Programming
+
 import socket
 
 def validatePort(PortString):
@@ -20,7 +25,7 @@ def validatePort(PortString):
 def get_local_ip():
     """Opens a socket to find local IP of the server. 
     This is later used to bind the socket to.
-    Params: 
+    Params: None
     Return: Address
     """
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
@@ -46,18 +51,33 @@ def main():
     myTCPSocket.bind((local_ip, int(port)))
     myTCPSocket.listen(5)
 
+    # Accept connetion
     incomingSocket, incomingAddress = myTCPSocket.accept()
+
+    # Log client IP 
     print(f"Connected to: {incomingAddress}")
     while True:
         try:
+            # cast incoming message back to string
             mesrecv = str(incomingSocket.recv(1024))
+
+            # Log client message
             print(f"Recieved message: {mesrecv}")
+
+            # Process client message to uppercase
             mesrecv = mesrecv.upper()
+
+        # break out and close sockets if errors occur
         except (ConnectionAbortedError, KeyboardInterrupt):
             break
+
         try:
+            # Send processed message back to client
             incomingSocket.send(bytearray(mesrecv, encoding='utf-8'))
+
+            # Log processed client message
             print(f"Response send: {mesrecv}")
+        # break out and close socket and connection if errors occur
         except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError, KeyboardInterrupt):
             break
     print("Connection ended")
