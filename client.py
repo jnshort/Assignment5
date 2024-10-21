@@ -1,3 +1,8 @@
+# Short, Justin
+# CECS 327
+# Due 10/20/24
+# Assignment 5 - Socket Programming
+
 import socket
 
 def validateIP(IPstring):
