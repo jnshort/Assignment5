@@ -1,0 +1,73 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2759
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 # Malcolm Roddy\
+# Generic Sort for python\
+from typing import List, Any, Callable\
+\
+class Person:\
+    def __init__(self, name: str, age: int):\
+        self.name = name\
+        self.age = age\
+\
+    def __repr__(self):\
+        return f'[\{self.name\}, \{self.age\}]'\
+\
+# Generic sort function that takes any list and a key for sorting\
+def generic_sort(data: List[Any], key_func: Callable[[Any], Any] = None) -> None:\
+    # If no key_func is provided, the default sort will be used\
+    data.sort(key=key_func)\
+\
+# Custom comparator for Person: sort by age (descending) and name (ascending)\
+def person_key(person: Person):\
+    # Sort by age descending (-person.age) and by name lexicographically (ascending)\
+    return (-person.age, person.name)\
+\
+# Generic print function for any list of elements\
+def print_array(data: List[Any]) -> None:\
+    print(data)\
+\
+# Main function where sorting takes place\
+def main():\
+    # Example data: list of Person objects\
+    people = [\
+        Person("Hal", 20), Person("Susann", 31), Person("Dwight", 19),\
+        Person("Kassandra", 21), Person("Lawrence", 25), Person("Cindy", 22),\
+        Person("Cory", 27), Person("Mac", 19), Person("Romana", 27),\
+        Person("Doretha", 32), Person("Danna", 20), Person("Zara", 23),\
+        Person("Rosalyn", 26), Person("Risa", 24), Person("Benny", 28),\
+        Person("Juan", 33), Person("Natalie", 25)\
+    ]\
+    \
+    # Example data: list of floating-point numbers\
+    numbers = [645.41, 37.59, 76.41, 5.31, -34.23, 1.11, 1.10, 23.46, 635.47, -876.32, 467.83, 62.25]\
+\
+    # Print original people array\
+    print("Unsorted people:")\
+    print_array(people)\
+\
+    # Sort people by age (descending) and name (ascending)\
+    generic_sort(people, key_func=person_key)\
+\
+    # Print sorted people array\
+    print("\\nSorted array of people by age (descending) and name (ascending):")\
+    print_array(people)\
+\
+    # Print original numbers array\
+    print("\\nNumbers:")\
+    print_array(numbers)\
+\
+    # Sort numbers in ascending order\
+    generic_sort(numbers)\
+\
+    # Print sorted numbers array\
+    print("\\nSorted numbers:")\
+    print_array(numbers)\
+\
+if __name__ == "__main__":\
+    main()\
+}
