@@ -32,16 +32,17 @@ def validateIP(IPstring):
 
 def main():
     validPort = False
+    validIP = False
+    while not validIP:
+        print("Enter Server IP Address: ")
+        serverIP = input()
+        validIP = validateIP(serverIP)
     while not validPort:
         print("Enter Port: ")
         port = input()
         validPort = validatePort(port)
+
     myTCPSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    host = socket.gethostname()
-    serverIP = socket.gethostbyname(host)
-    print(serverIP)
-
     myTCPSocket.bind((serverIP, int(port)))
     myTCPSocket.listen(5)
 
@@ -50,11 +51,11 @@ def main():
         try:
             mesrecv = str(incomingSocket.recv(1024))
             mesrecv = mesrecv.upper()
-        except (ConnectionAbortedError):
+        except (ConnectionAbortedError, KeyboardInterrupt):
             break
         try:
             incomingSocket.send(bytearray(mesrecv, encoding='utf-8'))
-        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError, KeyboardInterrupt):
             break
     incomingSocket.close()
     myTCPSocket.close()
